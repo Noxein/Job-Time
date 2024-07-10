@@ -12,7 +12,7 @@ type state= {
 
 export const SearchInputs = ({dispatch,state}:{dispatch: (payload: FormData) => void,state:state}) => {
   return (
-    <form action={dispatch} className='flex flex-col mt-10 px-10 mx-auto max-w-2xl'>
+    <form action={dispatch} className='flex flex-col mt-10 px-10 mx-auto max-w-2xl w-full'>
         <Input name="from" nazwa="Od" type="date"/>
 
         <Input name="to" nazwa="Do" type="date"/>

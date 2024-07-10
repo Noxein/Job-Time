@@ -17,7 +17,7 @@ export default function RemoveIndex(){
     
     return(
         <div className="w-full text-xl px-0 lg:px-24">
-            <div>
+            <div className='w-full'>
                 <SearchInputs dispatch={dispatch} state={state}/>
             </div>
             {state.data && 
