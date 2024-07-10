@@ -16,7 +16,7 @@ export default function RemoveIndex(){
     const[deletionState,dispatchState] = useFormState(RemoveItems,{error: ''})
     
     return(
-        <div className="w-full text-xl">
+        <div className="w-full text-xl px-0 lg:px-24">
             <div>
                 <SearchInputs dispatch={dispatch} state={state}/>
             </div>
