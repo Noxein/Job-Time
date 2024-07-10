@@ -46,7 +46,7 @@ export default function Add(){
                     </div>
                 </div>
             </div>
-            <button className="border-2 rounded h-12">Dodaj</button>
+            <button className="border-2 rounded h-12" type="submit">Dodaj</button>
             <ErrorDiv errorsArr={[state?.errors.message!]}/>
         </form>
     )

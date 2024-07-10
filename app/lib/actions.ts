@@ -202,6 +202,7 @@ type RemoveIndexesState = {
     error: string,
 }
 export const RemoveMultipleIds = async (ids:string[],prevState:RemoveIndexesState,formData:FormData) => {
+    'use server'
     try{
         ids.forEach(async(id)=>{
                 await sql`
