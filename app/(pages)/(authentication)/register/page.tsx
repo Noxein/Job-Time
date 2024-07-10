@@ -45,7 +45,7 @@ export default function Register(){
 
             <div>
                 <div className="flex flex-col">
-                        <label htmlFor="password">Password</label>
+                        <label htmlFor="password">Hasło</label>
                         <input type="password" id="password" name="password" className="rounded h-8 pl-1 text-black"/>
                 </div>
                 <div className="text-red-500 font-semibold">
@@ -55,7 +55,7 @@ export default function Register(){
 
             <div>
                 <div className="flex flex-col">
-                        <label htmlFor="confirmpassword">Confirm Password</label>
+                        <label htmlFor="confirmpassword">Powtórz hasło</label>
                         <input type="password" id="confirmpassword" name="confirmpassword" className="rounded h-8 pl-1 text-black"/>
                 </div>
                 <div className="text-red-500 font-semibold">
@@ -64,7 +64,7 @@ export default function Register(){
             </div>
 
             <button type="submit" className="bg-white text-blue-500 text-lg font-semibold rounded mt-4 pt-1 pb-1">
-                Register
+                Załóż konto
             </button>
             
             <div>
