@@ -8,7 +8,7 @@ export default function SomeLayout({
     children: React.ReactNode;
   }>) {
     return (
-        <div className="w-screen">
+        <div className="w-full">
             <Sidenav logoutBtn={<LogoutBtn />} />
             {children}
             <ResetRemoveArr />

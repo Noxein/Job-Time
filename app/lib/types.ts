@@ -1,3 +1,5 @@
+import { SetStateAction } from "react"
+
 export type DayType = {
     id: string,
     day: string,
@@ -12,4 +14,9 @@ export type contextUserType = {
     name: string,
     surename: string,
     email: string,
+}
+
+export type isOpenType = {
+    isOpen: boolean,
+    setIsOpen: React.Dispatch<SetStateAction<boolean>>
 }

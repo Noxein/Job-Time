@@ -3,7 +3,7 @@ import { NameSurename } from './NameSurename'
 
 export const RegularData = () => {
   return (
-    <div className='max-w-7xl flex mx-auto mt-10 mb-10'>
+    <div className='ml-2 md:ml-0 max-w-7xl flex mx-auto mt-10 mb-10'>
         <div className='w-6/12'>
             <p>Renata Kowalczyk Roboty Ziemne</p>
             <p>Anielów 26, 08-460 Sobolew</p>

@@ -4,7 +4,7 @@ import { z } from 'zod'
 import bcrypt from 'bcrypt'
 import { redirect } from 'next/navigation';
 import { AuthError } from 'next-auth';
-import { auth, signIn } from '@/auth';
+import { auth, signIn } from '../pages/api/auth/[...nextauth]';
 import { revalidatePath } from 'next/cache';
 import { contextUserType, DayType } from './types';
 

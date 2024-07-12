@@ -1,5 +1,5 @@
 'use server'
-import { signOut } from '@/auth'
+import { signOut } from '../pages/api/auth/[...nextauth]'
 import React from 'react'
 
 export const LogoutBtn = async () => {

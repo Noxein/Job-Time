@@ -20,7 +20,7 @@ export default function Add(){
     }
     const [state , dispatch] = useFormState(addDay,initState)
     return(
-        <form className="flex flex-col text-xl mt-10 w-full px-4 lg:px-24 max-w-2xl mx-auto" action={dispatch}>
+        <form className="flex flex-col text-xl mt-10 px-4 lg:px-24 max-w-2xl mx-auto" action={dispatch}>
             <Input name="date" nazwa="Data" type="date"/>
             <ErrorDiv errorsArr={state?.errors.zodErrors?.date}/>
 

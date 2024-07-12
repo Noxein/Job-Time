@@ -11,9 +11,8 @@ export default function Szukaj(){
     const[state,dispatch] = useFormState(searchByDate,initialState)
     return(
         <div className="w-full text-xl">
-            <div>
-                <SearchInputs dispatch={dispatch} state={state}/>
-            </div>
+            <SearchInputs dispatch={dispatch} state={state}/>
+            
             {state.data && 
             <div>
                 <DispalyDays days={state.data} />
