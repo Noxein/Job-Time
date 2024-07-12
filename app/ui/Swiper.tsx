@@ -17,16 +17,14 @@ const onSwipe = useCallback(({ deltaX, deltaY }:{ deltaX:number, deltaY:number }
   
     if (Math.abs(deltaX) > Math.abs(deltaY)) {
           if (deltaX > width-200) {
-            console.log("move_right",deltaX)
             setIsOpen(true)
           } else if(deltaX < -width+200){
-            console.log("move_left",deltaX)
             setIsOpen(false)
           }
       }
   }, [])
 const handleTouchStart = useCallback((e:TouchEvent) => {
-  //if user swaps the table menu wont show
+  //if user start swap on the table, then menu wont show
     if(tableRef?.tableRef.current?.contains(e.target as Node)) return
 
     setPosStart(e.touches[0].clientX)
