@@ -7,6 +7,7 @@ import { AuthError } from 'next-auth';
 import { auth, signIn } from '../pages/api/auth/[...nextauth]';
 import { revalidatePath } from 'next/cache';
 import { contextUserType, DayType } from './types';
+import { error } from 'console';
 
 type loginRegisterState = {
     message? : string,
@@ -143,6 +144,7 @@ export async function addDay(prevState:addDayState | addDayState & {errors:{mess
 export async function getDays(){
     const user = await auth()
     const userID = user?.user?.id
+    setTimeout(()=>{},2000)
 
     const days = await sql`
         SELECT * FROM marksjobdays WHERE userid = ${userID} ORDER BY day DESC LIMIT 12
@@ -153,32 +155,29 @@ export async function getDays(){
 
 type SearchByDateState = {
     error?: string,
+    data?: DayType[]
 }
 
 export async function searchByDate(prevState:SearchByDateState,formData:FormData){
-    const user = await auth()
-    const userID = user?.user?.id
 
     const from = formData.get('from') as string
     const to = formData.get('to') as string
 
-    if(!from || !to){
+    if(from === '' || to === '' || typeof from === 'undefined' || typeof to === 'undefined' ){
         return {
             error: 'Wprowadź daty'
         }
     }
-    if(new Date(from) > new Date(to)){
+    if(new Date(from)>new Date(to)){
         return {
             error: 'Zły zakres dat'
         }
     }
 
     try{
-        const data = await sql`
-            SELECT * FROM marksjobdays WHERE userid= ${userID} AND day BETWEEN ${from} AND ${to} ORDER BY day DESC
-        `
+        const data = await FetchByDate(from,to)
         return {
-            data: data.rows as DayType[]
+            data: data
         }
     }catch(e){
         return {
@@ -186,7 +185,17 @@ export async function searchByDate(prevState:SearchByDateState,formData:FormData
         }
     }
 }
+export const FetchByDate = async (from: string, to: string) => {
 
+    const user = await auth()
+    const userID = user?.user?.id
+    console.log(from, to)
+
+     const data = await sql`
+    SELECT * FROM marksjobdays WHERE userid= ${userID} AND day BETWEEN ${from} AND ${to} ORDER BY day DESC
+    `
+    return data.rows as  DayType[]
+}
 export const getUser = async () =>{
     const user = await auth()
     const userID = user?.user?.id
@@ -201,7 +210,7 @@ export const getUser = async () =>{
 type RemoveIndexesState = {
     error: string,
 }
-export const RemoveMultipleIds = async (ids:string[],prevState:RemoveIndexesState,formData:FormData) => {
+export const RemoveMultipleIds = async (ids:string[]) => {
     'use server'
     try{
         ids.forEach(async(id)=>{
@@ -216,6 +225,6 @@ export const RemoveMultipleIds = async (ids:string[],prevState:RemoveIndexesStat
     }
     
     revalidatePath('/home')
+    revalidatePath('/home/remove')
     redirect('/home')
 }
-
