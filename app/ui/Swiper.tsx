@@ -25,7 +25,7 @@ const onSwipe = useCallback(({ deltaX, deltaY }:{ deltaX:number, deltaY:number }
   }, [])
 const handleTouchStart = useCallback((e:TouchEvent) => {
   //if user start swap on the table, then menu wont show
-    if(tableRef?.tableRef.current?.contains(e.target as Node)) return
+    if(tableRef?.MobileTableRef.current?.contains(e.target as Node)) return
 
     setPosStart(e.touches[0].clientX)
     setPosEnd(e.touches[0].clientY)
