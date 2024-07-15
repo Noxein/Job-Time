@@ -1,8 +1,9 @@
 'use client'
 
 import { addDay } from "@/app/lib/actions"
-import { useFormState } from "react-dom"
+import { useFormState, useFormStatus } from "react-dom"
 import { Input, ErrorDiv } from "@/app/ui/Input"
+import { SubmitButton } from "@/app/ui/PendingBtn"
 
 export default function Add(){
     const initState = {
@@ -20,7 +21,7 @@ export default function Add(){
     }
     const [state , dispatch] = useFormState(addDay,initState)
     return(
-        <form className="flex flex-col text-xl mt-10 px-4 lg:px-24 max-w-2xl mx-auto" action={dispatch}>
+        <form className="flex flex-col text-xl px-12 mt-10 max-w-2xl lg:max-w-lg lg:px-4 mx-auto lg:bg-zinc-50 lg:border-2 lg:border-zinc-200 py-8 rounded-xl " action={dispatch}>
             <Input name="date" nazwa="Data" type="date"/>
             <ErrorDiv errorsArr={state?.errors.zodErrors?.date}/>
 
@@ -46,7 +47,7 @@ export default function Add(){
                     </div>
                 </div>
             </div>
-            <button className="border-2 rounded h-12" type="submit">Dodaj</button>
+            <SubmitButton text="Dodaj"/>
             <ErrorDiv errorsArr={[state?.errors.message!]}/>
         </form>
     )
