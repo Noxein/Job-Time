@@ -4,7 +4,7 @@ export const Input = ({nazwa,name,type,...rest}:{nazwa:string,name:string,type:s
     return(
         <div className='w-full flex flex-col'>  
             <label htmlFor={name}>{nazwa}</label>
-            <input type={type} id={name} name={name} className="border-2 rounded h-12 w-full" {...rest}/>
+            <input type={type} id={name} name={name} className="border-2 rounded h-12 w-full hover:border-blue-300 border-zinc-300 bg-zinc-100" {...rest}/>
         </div>
     )
 }
