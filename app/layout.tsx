@@ -4,7 +4,6 @@ import "./globals.css";
 import { RemoveIndexesContextProvider } from "./context/RemoveIndexes";
 import { UserFetcher } from "./ui/UserFetcher";
 import { Swiper } from "./ui/Swiper";
-import { useCallback } from "react";
 import { SideNavContextProvider } from "./context/SideNavContext";
 import { TableRefContextProvider } from "./context/PhoneTableRefContext";
 
@@ -20,15 +19,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const handleSwipe = useCallback(({ deltaX, deltaY }:{ deltaX:number, deltaY:number }) => {
-    if (Math.abs(deltaX) > Math.abs(deltaY)) {
-          if (deltaX > 0) {
-            console.log("move_right")
-          } else {
-            console.log("move_left")
-          }
-      }
-  }, [])
+
   return (
     <html lang="en">
       <body className={` ${inter} flex`}>
@@ -36,8 +27,8 @@ export default function RootLayout({
           <UserFetcher>
             <SideNavContextProvider>
               <TableRefContextProvider>
-                {children}
-                <Swiper/>
+                  {children}
+                  <Swiper/>
               </TableRefContextProvider>
             </SideNavContextProvider>
           </UserFetcher>
