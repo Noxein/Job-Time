@@ -76,3 +76,25 @@
   50%{transform: scaleY(2)}
   100%{transform: scaleY(1)}
 }
+
+.OpenSidenav{
+  animation: OpenSidenav .3s ease forwards;
+  -webkit-animation: OpenSidenav .3s ease forwards;
+  -moz-animation: OpenSidenav .3s ease forwards;
+}
+
+.OpenSidenavReverse{
+  animation: OpenSidenavReverse .3s ease forwards reverse;
+  -webkit-animation: OpenSidenavReverse .3s ease forwards reverse;
+  -moz-animation: OpenSidenavReverse .3s ease forwards reverse;
+}
+
+@keyframes OpenSidenav {
+  0%{transform:  translateX(-100%)}
+  100%{transform: translateX(0)}
+}
+
+@keyframes OpenSidenavReverse {
+  0%{transform:  translateX(-100%)}
+  100%{transform: translateX(0)}
+}

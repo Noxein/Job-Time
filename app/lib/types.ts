@@ -18,5 +18,5 @@ export type contextUserType = {
 
 export type isOpenType = {
     isOpen: boolean,
-    setIsOpen: React.Dispatch<SetStateAction<boolean>>
+    setIsOpen: React.Dispatch<SetStateAction<boolean>>,
 }

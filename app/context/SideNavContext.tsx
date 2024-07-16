@@ -1,5 +1,5 @@
 'use client'
-import { createContext, useState } from "react";
+import { createContext, useRef, useState } from "react";
 import { isOpenType } from "../lib/types";
 
 export const SideNavContext = createContext<isOpenType|null>(null)

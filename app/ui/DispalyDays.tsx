@@ -6,6 +6,8 @@ import { DayType } from '../lib/types'
 import { DispalyDayOnPhone } from './DispalyDayOnPhone'
 import { DispalyDayOnPhoneWithData } from './DispalyDayOnPhoneWithData'
 import { TableRefContext } from '../context/PhoneTableRefContext'
+import { MoblieTableConcept } from './MoblieTableConcept'
+import { OneIndex } from './LoadingSkeletons/DisplayDaysMobile'
 
 
 
@@ -43,7 +45,7 @@ export const DispalyDays = ({days,setIdToRemove,showDownloadBtn=false}:{days?:Da
      
     </table>
   
-    <table className='flex lg:hidden overflow-x-auto whitespace-nowrap w-svw mt-6 phone-table' ref={tableRef?.MobileTableRef}>
+    <table className='flex lg:hidden overflow-x-auto whitespace-nowrap w-svw mt-6 phone-table mx-auto' ref={tableRef?.MobileTableRef}>
       <DispalyDayOnPhone/>
       {days && days.map((day,index)=>(<DispalyDayOnPhoneWithData key={day.id} day={day} index={index}/>))}
     </table>

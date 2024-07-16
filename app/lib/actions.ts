@@ -212,6 +212,9 @@ type RemoveIndexesState = {
 }
 export const RemoveMultipleIds = async (ids:string[]) => {
     'use server'
+    if(ids.length===0){
+        return { error: 'Zaznacz indexy które chcesz usunąć'}
+    }
     try{
         ids.forEach(async(id)=>{
                 await sql`

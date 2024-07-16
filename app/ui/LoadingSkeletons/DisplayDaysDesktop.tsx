@@ -1,8 +1,9 @@
 import React from 'react'
+import { DisplayDaysMobile } from './DisplayDaysMobile'
 
 export const DisplayDaysDesktop = () => {
-    return (
-    <div className='max-w-7xl mx-auto mt-10'>
+    return (<>
+    <div className='hidden lg:block max-w-7xl mx-auto mt-10'>
         <div>
             <DivGroup initHeight='h-16'/>
             <DivGroup initHeight='h-8' oddColor={true}/>
@@ -12,6 +13,8 @@ export const DisplayDaysDesktop = () => {
             <DivGroup initHeight='h-8' oddColor={true}/>
         </div>
     </div>
+    <DisplayDaysMobile />
+    </>
     )
 }
 const DivGroup = ({initHeight,oddColor}:{initHeight:string,oddColor?:boolean}) => {
