@@ -69,6 +69,8 @@ export const authenticate =  async (prevState: string | undefined, formData: For
       await signIn('credentials',formData)
     }catch(e){
       if(e instanceof AuthError){
+        //workaround next js auth
+        //if(e.cause?.err?.code === 'credentials') return "Zły login lub hasło";
         switch(e.type){
           case 'CredentialsSignin':
             return "Zły login lub hasło";
