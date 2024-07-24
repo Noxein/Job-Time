@@ -9,7 +9,8 @@ const withPWA = withPWAInit({
     disable: false,
     workboxOptions:{
         disableDevLogs: true,
-    }
+    },
+    disable: process.env.NODE_ENV === 'development',
   });
 
 const nextConfig = {};
