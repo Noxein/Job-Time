@@ -29,7 +29,7 @@ export default function Sidenav({logoutBtn}:{logoutBtn:React.ReactNode}){
 
   return (<>
     {!isOpen && <button className='fixed md:hidden' onClick={()=>OpenOrCloseSideNavBtnFunc('open')}><MenuIcon/></button>}
-    <nav className={`lg:px-24 flex flex-col fixed gap-6 h-dvh md:static md:h-16 md:flex-row md:w-screen bg-blue-500 text-white items-center text-l px-6 z-10 sideNavTransition`} ref={sideNavRef}>
+    <nav className={`lg:px-24 flex flex-col fixed gap-6 h-dvh md:static md:h-16 md:flex-row md:w-screen bg-blue-500 text-white items-center text-l px-6 z-20 sideNavTransition`} ref={sideNavRef}>
       
         <button onClick={()=>OpenOrCloseSideNavBtnFunc('close')} className='absolute right-2 md:hidden'> <ArrowLeft/> </button>
         <Link href={'/home'} className={`${hover} mt-10 md:mt-0 ${style}`} tabIndex={isOpen?0:-1} onClick={ClickNavbarLinkOnMobile}>
