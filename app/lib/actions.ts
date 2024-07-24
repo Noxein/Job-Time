@@ -7,7 +7,12 @@ import { AuthError } from 'next-auth';
 import { auth, signIn } from '../pages/api/auth/[...nextauth]';
 import { revalidatePath } from 'next/cache';
 import { contextUserType, DayType } from './types';
-import { error } from 'console';
+
+const UserID = async () => {
+    const user = await auth()
+    const userID = user?.user?.id
+    return userID
+}
 
 type loginRegisterState = {
     message? : string,
@@ -57,7 +62,7 @@ export async function RegisterUser(prevState:loginRegisterState,formData:FormDat
     }
     const hashedPassword = await bcrypt.hash(password,10)
 
-    const saveUser = await sql`
+    await sql`
         INSERT INTO marksjobusers (username,password,email,name,surename) VALUES (${Math.random().toString()}, ${hashedPassword}, ${email}, ${name}, ${surename})
     `
 
@@ -125,8 +130,7 @@ export async function addDay(prevState:addDayState | addDayState & {errors:{mess
 
     const { date, start, end, workplace, liters, counter } = validateFields.data
 
-    const user = await auth()
-    const userID = user?.user?.id
+    const userID = await UserID()
 
     try{
         await sql`
@@ -144,12 +148,10 @@ export async function addDay(prevState:addDayState | addDayState & {errors:{mess
 }
 
 export async function getDays(){
-    const user = await auth()
-    const userID = user?.user?.id
-    setTimeout(()=>{},2000)
+    const userID = await UserID()
 
     const days = await sql`
-        SELECT * FROM marksjobdays WHERE userid = ${userID} ORDER BY day DESC LIMIT 12
+        SELECT * FROM marksjobdays WHERE userid = ${userID} AND endhour IS NOT NULL ORDER BY day DESC LIMIT 12
     `
     revalidatePath('/home')
     return days.rows as DayType[]
@@ -188,10 +190,7 @@ export async function searchByDate(prevState:SearchByDateState,formData:FormData
     }
 }
 export const FetchByDate = async (from: string, to: string) => {
-
-    const user = await auth()
-    const userID = user?.user?.id
-    console.log(from, to)
+    const userID = await UserID()
 
      const data = await sql`
     SELECT * FROM marksjobdays WHERE userid= ${userID} AND day BETWEEN ${from} AND ${to} ORDER BY day DESC
@@ -199,9 +198,7 @@ export const FetchByDate = async (from: string, to: string) => {
     return data.rows as  DayType[]
 }
 export const getUser = async () =>{
-    const user = await auth()
-    const userID = user?.user?.id
-    if(!userID) return null
+    const userID = await UserID()
 
     const userData = await sql`
         SELECT name,surename,email FROM marksjobusers WHERE id = ${userID}
@@ -233,3 +230,77 @@ export const RemoveMultipleIds = async (ids:string[]) => {
     revalidatePath('/home/remove')
     redirect('/home')
 }
+
+export const StartWork = async () => {
+    const userID = await UserID()
+
+    const date = new Date()
+    const start = `${date.getHours()}:${date.getMinutes()}:00`
+
+    await sql`
+    INSERT INTO marksjobdays (day,starthour,endhour,workplace,liters,counterreading,userid) VALUES (${JSON.stringify(date)},${start},${null},${null},${null},${null},${userID})
+    `
+
+    return null
+}
+
+export const checkIfIsWorking = async () => {
+    const userID = await UserID()
+
+    const hasWorkStarted = await sql`
+        SELECT * FROM marksjobdays WHERE userid = ${userID} AND endhour IS NULL;
+    `
+    console.log(hasWorkStarted.rows,userID)
+    if(hasWorkStarted.rows[0]) return true
+    
+    return false
+}
+
+type EndWorkState = {
+    errors?:{
+        workplace?: string[],
+        liters?: string[],
+        counter?: string[],
+        defaultError?: string
+    } 
+}
+
+export const EndWork = async (prevState: EndWorkState,formData: FormData) => {
+    const userID = await UserID()
+    const ZodEndWork = addDayZod.omit({end:true,date:true,start:true})
+
+    const validateFields = ZodEndWork.safeParse({
+        workplace: formData.get('workplace'),
+        liters: Number(formData.get('liters') as string),
+        counter: Number(formData.get('counter') as string),
+    })
+
+    if(!validateFields.success){
+        return {
+            errors: validateFields.error.flatten().fieldErrors
+        }
+    }
+    const { workplace, counter, liters } = validateFields.data
+    const Days = await sql`
+    SELECT * FROM marksjobdays WHERE userid = ${userID} AND endhour IS NULL;
+    `
+
+    if(!Days) return { errors: {
+        defaultError: 'Something went wrong',
+        workplace: [''],
+        liters: [''],
+        counter: [''],
+    }}
+    const DayID = Days.rows[0].id
+    const date = new Date()
+    const EndHour = `${date.getHours()}:${date.getMinutes()}:00`
+
+    await sql`
+        UPDATE marksjobdays
+        SET endhour = ${EndHour}, workplace = ${workplace}, liters = ${liters}, counterreading = ${counter}
+        WHERE id = ${DayID}
+    `
+    revalidatePath('/home')
+    redirect('/home')
+}
+
